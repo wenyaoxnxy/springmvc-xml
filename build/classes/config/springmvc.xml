@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+        
+        <bean id="userController" name="/queryUsers.action" class="com.weny.springmvc.controller.UserController"></bean>
+        
+        <bean id="httpUserController" class="com.weny.springmvc.controller.HttpUserController"></bean>
+        
+		<!-- 要编写的handler要实现 Controller 接口-->
+		<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>     
+		<!-- 要编写的handler要实现 HttpRequestHandler 接口-->
+		<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean>     
+		 
+		<!-- 根据上方配置bean，进行urlMapping -->  
+		<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean>    
+		<!-- 简单url映射器 -->    
+		<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+			<property name="mappings">
+				<props>
+					<!-- key 为访问路径，userController 为上方配置bean的id-->
+					<prop key="/queryUsers1.action">userController</prop>
+					<prop key="/queryUsers2.action">userController</prop>
+					<prop key="/queryHttpUsers.action">httpUserController</prop>
+				</props>
+			</property>
+		</bean>
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>        
+        
+</beans>
